@@ -35,8 +35,11 @@ namespace PerformanceEvaluation
 
             int[] iterations = new int[] { 500, 5000, 50000 };
 
-            CalculateSpeed(AppendText, iterations, "Concatenate Text");
-            CalculateSpeed(StringBuildTest, iterations, "StringBuilder Text");
+            /* CalculateSpeed(AppendText, iterations, "Concatenate Text");
+             CalculateSpeed(StringBuildTest, iterations, "StringBuilder Text");*/
+            CalculateSpeed(DoubleTest, iterations, "Double");
+            CalculateSpeed(DecimalTest, iterations, "Decimal");
+
 
             Console.ReadLine();
         }
@@ -60,7 +63,7 @@ namespace PerformanceEvaluation
             string sbOutput = test1.ToString();
         }
 
-        //In C#, an Action is a delegate type defined in the System namespace that represents a method containing a void return type and no parameters. It's part of the built-in delegate types that provide a simple way to pass methods as parameters without having to declare a custom delegate
+        //In C#, an Action is a delegate type that represents a method containing a void return type and no parameters. It's part of the built-in delegate types that provide a simple way to pass methods as parameters without having to declare a custom delegate
         public static void CalculateSpeed(Action<int> methodToTest, int[] repetitions, string testName )
         {
             for(int i = 0; i < repetitions.Length; i++)
@@ -72,6 +75,28 @@ namespace PerformanceEvaluation
 
                 stopwatch.Stop();
                 Console.WriteLine($"{testName} {repetitions[i]} reps:{stopwatch.ElapsedMilliseconds}ms");
+            }
+        }
+
+        public static void DoubleTest(int repetitions)
+        {
+            double x = 4.25;
+            double y = 25.75;
+
+            for(int i = 0; i < repetitions; i++)
+            {
+                x += y;
+            }
+        }
+        // we use double for anything with a decimal unless it's money
+        public static void DecimalTest(int repetitions)
+        {
+            decimal x = 4.25M;
+            decimal y = 25.75M;
+
+            for (int i = 0; i < repetitions; i++)
+            {
+                x += y;
             }
         }
     }
